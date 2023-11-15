@@ -1,0 +1,69 @@
+<form action="" class="" id="submit-form" name="myform" onsubmit="return func()">
+    <div class="main-input">
+        <input type="text" name="w3lName" placeholder="Enter your name" class="contact-input" required />
+        <input type="email" name="w3lSender" placeholder="Enter your mail" class="contact-input" required />
+        <input type="number" name="w3lPhone" placeholder="Your phone number" class="contact-input" required />
+        <textarea class="contact-textarea contact-input" name="w3lMessage" placeholder="Enter your message" required></textarea>
+    </div>
+    <div class="text-right">
+        <button type="submit" class="btn-primary btn primary-btn-style">Send</button>
+    </div>
+</form>
+<script>
+    $("#submit-form").submit((e)=>{
+        e.preventDefault()
+        $.ajax({
+            url:"https://script.google.com/macros/s/AKfycbzzPZcZXAxWHf4pTQBh4xFHF1fh4K_ko6lakin0DhbcYKtRQDWP1du5gKsFhrOXimWU/exec",
+            data:$("#submit-form").serialize(),
+            method:"post",
+            success:function (response){
+                alert("Form submitted successfully")
+                window.location.reload()
+                //window.location.href="https://google.com"
+            },
+            error:function (err){
+                alert("Something Error")
+
+            }
+        })
+    })
+</script> 
+
+<script>
+    function func() {
+        var correct_way = /^[A-Za-z]+$/;
+        var a = document.myform.w3lName.value;
+
+        if (a == "") {
+            document.getElementById("message").innerHTML = "Please fill the first name";
+            return false;
+        }
+
+        if (a.length < 3) {
+            document.getElementById("message").innerHTML = "User name must be at least 3 characters";
+            return false;
+        }
+
+        if (a.length > 20) {
+            document.getElementById("message").innerHTML = "User name must be less than 20 characters";
+            return false;
+        }
+
+        if (!a.match(correct_way)) {
+            document.getElementById("message").innerHTML = "Only alphabets are allowed in the name";
+            return false;
+        }
+
+        var c = document.myform.w3lSender.value;
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if (!c.match(emailPattern)) {
+            document.getElementById("messageMail").innerHTML = "Invalid email address";
+            return false;
+        }
+
+        // ... Other validation checks for phone number and message
+
+        return true;
+    }
+</script>
